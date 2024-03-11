@@ -1,9 +1,15 @@
 import { Component } from "react";
-import "./index.css";
 import ProductCard from "../ProductCard";
+import ProductDetailItem from "../ProductDetailItem";
+import "./index.css";
 
 class Home extends Component {
-  state = { productsList: [] };
+  state = { productsList: [], isProduct: false, id: 1 };
+
+  getId = (id) => {
+    this.setState((prev) => ({ id: id }));
+    this.setState({ isProduct: true });
+  };
 
   componentDidMount = () => {
     this.getDetailsList();
@@ -26,14 +32,18 @@ class Home extends Component {
   };
 
   render() {
-    const { productsList } = this.state;
+    const { productsList, isProduct, id } = this.state;
     return (
       <div className="main-container">
-        <ul>
-          {productsList.map((each) => (
-            <ProductCard key={each.id} details={each} />
-          ))}
-        </ul>
+        {isProduct ? (
+          <ProductDetailItem key={id} num={id} />
+        ) : (
+          <ul>
+            {productsList.map((each) => (
+              <ProductCard key={each.id} getId={this.getId} details={each} />
+            ))}
+          </ul>
+        )}
       </div>
     );
   }

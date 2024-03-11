@@ -19,11 +19,9 @@ class ProductDetailItem extends Component {
   });
 
   getProductData = async () => {
-    const { match } = this.props;
-    const { params } = match;
-    const { id } = params;
-
-    const url = `https://fakestoreapi.com/products/${id}`;
+    const { num } = this.props;
+    console.log(num);
+    const url = `https://fakestoreapi.com/products/${num}`;
     const response = await fetch(url);
     const productData = await response.json();
     const formatData = this.getUpdates(productData);
@@ -43,12 +41,22 @@ class ProductDetailItem extends Component {
     } = productData;
     return (
       <div className="card-container">
-        <h1>qef</h1>
         <div className="left-container">
-          <img src={image} alt={title} />
+          <img className="image-size" src={image} alt={title} />
         </div>
         <div className="right-container">
-          <p>{title}</p>
+          <div className="text-page">
+            <p>{title}</p>
+            <p>Rating: {rating}</p>
+            <p>{description}</p>
+            <p>Category: {category}</p>
+          </div>
+          <div className="cart-page">
+            <p className="price-text">Rs: {price}</p>
+            <button className="btn-cart">Add to Cart</button>
+            <button className="btn-buy">Buy Now</button>
+            <button className="btn-wish">Add to Wishlist</button>
+          </div>
         </div>
       </div>
     );
